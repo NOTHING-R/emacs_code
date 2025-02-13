@@ -136,15 +136,15 @@
 
   (rune/leader-keys
     "t" '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme"))
-
+    "tt" '(counsel-load-theme :which-key "choose theme")
+     ;;"ts" '(hydra-text-scale/body)) 
 (use-package evil
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
-  :hook (after-init . evil-mode)
+  ;;:hook (after-init . evil-mode)
   :config
   (evil-mode 1)
 
@@ -158,4 +158,23 @@
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
-(use-package evil-collection)
+(use-package evil-collection
+  :after evil
+  :config (evil-collection-init)
+
+  (use-package hydra
+    :ensure t)
+
+  
+(use-package hydra)
+
+(defhydra hydra-text-scale (:timeout 4)
+  "Scale text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
+
+;; Using 'rune/Leader-keys' correctly
+(rune/Leader-keys
+  "ts" (hydra-text-scale/body) "scale text")
+
