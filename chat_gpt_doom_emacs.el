@@ -1,6 +1,6 @@
 (setq inhibit-startup-message t)
 
-(scroll-bar-mode -1)        ; Disable visible scrollbar
+(croll-bar-mode -1)        ; Disable visible scrollbar
 (tool-bar-mode -1)          ; Disable the toolbar
 (tooltip-mode -1)           ; Disable tooltips
 (set-fringe-mode 10)        ; Give some breathing room
@@ -9,6 +9,8 @@
 
 ;; Set up the visible bell
 (setq visible-bell t)
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 280)
 (load-theme 'doom-dracula t)
@@ -115,12 +117,10 @@
 
 (use-package swiper
   :after ivy
-  :bind (("C-s" . swiper)))
+  :bind (("SPC s" . swiper)))
 
 (use-package projectile
   :config
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
